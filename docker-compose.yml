@@ -8,18 +8,16 @@ services:
     image: lina-goapp:v1
     container_name: goapp
     environment:
-      # Real DB connection (provided)
-      DB_HOST: "migrate.cluster-c3o6qc26ias1.eu-west-1.rds.amazonaws.com"
-      DB_PORT: "3306"
-      DB_USER: "lina"
-      DB_PASS: "123456"                        # <<< set DB password here if required
-      DB_NAME: "ocpp_CSGO"
-
-      # Active sessions condition (customize if needed)
+    
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
       ACTIVE_SESSIONS_CONDITION: "end_time IS NULL"
-      TZ: "UTC"
+      TZ: ${TZ}
     ports:
-      - "8000:8000"   # optional for direct debug
+      - "8000:8000"
     restart: unless-stopped
 
   nginx:
@@ -32,5 +30,3 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
-
-# Both services share the default compose network, so nginx can reach http://goapp:8000
