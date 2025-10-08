@@ -1,24 +1,36 @@
-# Dockerized Go + Nginx (Simple)
+# Go App with Docker + Nginx
 
-Minimal setup: environment variables are set inside `docker-compose.yml`.
+Simple Dockerized Go application with Nginx reverse proxy.
 
-## Provided DB values (already placed in docker-compose.yml)
+## Quick Start
 
-- DB_HOST: migrate.cluster-c3o6qc26ias1.eu-west-1.rds.amazonaws.com
-- DB_PORT: 3306
-- DB_NAME: ocpp_CSGO
-- DB_USER: lina
-- DB_PASS: 123456
+1. Create a `.env` (next to `docker-compose.yml`):
+   ```ini
+   DB_HOST=YOUR_DB_HOST
+   DB_PORT=3306
+   DB_NAME=YOUR_DB_NAME
+   DB_USER=YOUR_DB_USER
+   DB_PASS=CHANGE_ME
+   TZ=UTC
+   ```
 
-> Note: DB password field is left empty in the compose file — set it before running if the DB requires a password.
+2) Run the application:
 
-## Run
+   ```bash
+   docker compose up -d --build
+   ```
 
-1. Edit `docker-compose.yml` → set `DB_PASS` if required.
-2. Build & run:
+3) Access your app:
+   - Go application: http://localhost:8000
+   - Nginx proxy: http://localhost:8080
+
+## Services
+
+- **goapp**: Go application running on port 8000
+- **nginx**: Reverse proxy on port 8080
+
+## Stop Application
 
 ```bash
-docker compose build
-docker compose up
-
+docker compose down
 ```
